@@ -1,21 +1,13 @@
 ---
-author: Radek
-date: "2019-01-25"
+author: Wes H Cooper
+date: "2022-01-14"
 title: About
 ---
 
-# Hi there
+# Welcome
 
-My name is Radek and I'm the author of this theme. I made it to help you present your ideas easier.
+Data Theory is a blog created by Wes Cooper that provides articles related to statistics, data, and research. Wes Cooper has been learning programming and data analysis in his free time and operates this blog to apply the knowledge he is learning.
 
-We all know how hard is to start something on the web, especially these days. You need to prepare a bunch of stuff, configure them and when that’s done — create the content.
+Wes Cooper’s interest and background is in international relations. As a result, many of the statistical and data science concepts covered in this blog are applied to politics and international relations. You can read Wes Cooper’s published research at [Research Gate](https://www.researchgate.net/profile/Wes-H-Cooper).
 
-This theme is pretty basic and covers all of the essentials. All you have to do is start typing!
-
-The theme includes:
-
-- **light/dark mode**, depending on your preferences
-- great reading experience thanks to [**Inter UI font**](https://rsms.me/inter/), made by [Rasmus Andersson](https://rsms.me/about/)
-- nice code highlighting thanks to [**PrismJS**](https://prismjs.com)
-
-So, there you have it... enjoy!
+[Click here](wescpr@live.com) to contact Wes Cooper.

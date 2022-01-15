@@ -4,9 +4,9 @@ theme: hugo-theme-hello-friend
 paginate: 5
 params:
   contentTypeName: post
-  defaultTheme: dark
+  defaultTheme: light
   showMenuItems: 2
-  showReadingTime: no
+  showReadingTime: yes
 languages:
   en:
     copyright: ''
@@ -18,9 +18,9 @@ languages:
         - identifier: about
           name: About
           url: /about
-        - identifier: showcase
-          name: Showcase
-          url: /showcase
+        - identifier: archive
+          name: Archive
+          url: /archive
     menuMore: Show more
     minuteReadingTime: min read
     newerPosts: Newer posts
@@ -28,9 +28,9 @@ languages:
     params:
       logo:
         logoHomeLink: /
-        logoText: hello friend
+        logoText: DataTheory
     readMore: Read more
     readOtherPosts: Read other posts
-    subtitle: A simple theme for Hugo
-    title: Hello Friend
+    subtitle: Data and Research Blog
+    title: DataTheory
     writtenBy: Written by
