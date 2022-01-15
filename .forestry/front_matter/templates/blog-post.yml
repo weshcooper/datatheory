@@ -23,4 +23,5 @@ fields:
     maxSize: 64
   label: cover
 pages:
+- content/post/analyzing-economic-sanctions-and-anti-americanism.md
 - content/post/welcome-to-the-blog.md
