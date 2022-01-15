@@ -2,7 +2,6 @@
 author = "Wes H Cooper"
 categories = []
 date = 2022-01-14T13:00:00Z
-draft = true
 tags = []
 title = "Welcome to the Blog"
 
