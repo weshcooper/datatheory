@@ -1,7 +1,7 @@
 +++
 author = "Wes H Cooper"
 categories = []
-cover = "/uploads/1-msot4l0xw7lf3iu-en0uuq.png"
+cover = ""
 cover_image = "/uploads/1-msot4l0xw7lf3iu-en0uuq.png"
 date = 2022-01-14T13:00:00Z
 tags = []
