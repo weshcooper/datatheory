@@ -11,6 +11,16 @@ fields:
 - type: datetime
   name: date
   label: date
+- name: description
+  type: textarea
+  default: ''
+  config:
+    required: false
+    wysiwyg: false
+    schema:
+      format: markdown
+    max: 250
+  label: description
 - type: list
   name: categories
   label: categories
@@ -22,16 +32,6 @@ fields:
   config:
     maxSize: 64
   label: cover
-- name: description
-  type: textarea
-  default: ''
-  config:
-    required: false
-    wysiwyg: false
-    schema:
-      format: markdown
-    max: 250
-  label: description
 pages:
 - content/post/analyzing-economic-sanctions-and-anti-americanism.md
 - content/post/welcome-to-the-blog.md
