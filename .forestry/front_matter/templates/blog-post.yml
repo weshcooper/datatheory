@@ -34,4 +34,5 @@ fields:
   label: cover
 pages:
 - content/post/analyzing-economic-sanctions-and-anti-americanism.md
+- content/post/linear-regression-and-multiple-regression-in-r.md
 - content/post/welcome-to-the-blog.md
