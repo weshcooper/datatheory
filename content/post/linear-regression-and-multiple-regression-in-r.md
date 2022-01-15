@@ -9,4 +9,4 @@ tags = ["R", "regression"]
 title = "Linear Regression and Multiple Regression in R"
 
 +++
-In this post, we will cover linear regression, a popular statistical technique used to analyze data when the dependent variable is continuous. 
+In this post, we will cover linear regression, a popular statistical technique used to analyze data when the dependent variable is continuous. To explain how to do this analysis in R we will examine the ... data set.
