@@ -1,6 +1,7 @@
 +++
 author = "Wes H Cooper"
 categories = []
+cover_image = "/uploads/8657833970_4a6d135ed9_o.jpg"
 date = 2022-01-14T13:00:00Z
 tags = []
 title = "Welcome to the Blog"
