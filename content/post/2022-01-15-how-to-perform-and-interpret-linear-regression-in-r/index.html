@@ -1,19 +1,23 @@
 ---
 title: How to Perform and Interpret Linear Regression in R
 author: Wes H Cooper
-date: '2022-01-15'
+date: '2022-01-16'
 slug: []
 categories: []
+draft: false
 tags:
   - linear regession
-description: In this post, we will cover linear regression, a popular statistical technique used to analyze data when the dependent variable is continuous. To explain how to do this analysis in R we will examine a data set of housing data in Boston. The data set conains 506 census tracts of Boston from the 1970 census.
+description: In this post, we will cover simple linear regression and multiple linear regression, a popular statistical technique used to analyze data when the dependent variable is continuous. To explain how to do this analysis in R we will examine a data set of housing data in Boston. The data set conains 506 census tracts of Boston from the 1970 census.
 ---
 
 
 
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>In this post, we will cover linear regression, a popular statistical technique used to analyze data when the dependent variable is continuous. To explain how to do this analysis in R we will examine a data set of housing data in Boston. The data set conains 506 census tracts of Boston from the 1970 census. The variables in the data set can be used to predict <code>cmedv</code>, the median value of owner-occupied homes in 1000’s of USD.</p>
+<p>In this post, we will cover simple linear regression and multiple linear regression, a popular statistical technique used to analyze data when the dependent variable is continuous. To explain how to do this analysis in R we will examine a data set of housing data in Boston. The data set conains 506 census tracts of Boston from the 1970 census. The variables in the data set can be used to predict <code>cmedv</code>, the median value of owner-occupied homes in 1000’s of USD.</p>
+</div>
+<div id="examining-the-data" class="section level1">
+<h1>Examining the Data</h1>
 <p>Calling <code>head()</code> on the data set produces the following:</p>
 <pre class="r"><code>library(mlbench)
 data(&quot;BostonHousing2&quot;)
@@ -32,16 +36,13 @@ head(BostonHousing2)
 ## 4 6.998 45.8 6.0622   3 222    18.7 394.63  2.94
 ## 5 7.147 54.2 6.0622   3 222    18.7 396.90  5.33
 ## 6 6.430 58.7 6.0622   3 222    18.7 394.12  5.21</code></pre>
-</div>
-<div id="examining-the-data" class="section level1">
-<h1>Examining the Data</h1>
 <p>From <code>head()</code> we can see the 19 columns. For this project, I’m most interested in examining the relationship between <code>rm</code> and <code>cmedv</code>. <code>rm</code> tells us how many rooms are in a house while <code>cmedv</code> tells us the median value of owner-occupied homes in 1000’s of USD. I’m thinking that the amount of rooms in a house may have a relationship with the cost of the house.</p>
-<p>We can also create a scatter plot with the function <code>ggplot()</code> to examine if it looks like there is a linear relationship.</p>
-<pre class="r"><code>library(ggplot2)
-
-ggplot(BostonHousing2, aes(x = rm, y = cmedv)) +
-  geom_point()</code></pre>
+<p>We can also create a scatter plot with the function <code>plot()</code> to examine if it looks like there is a linear relationship.</p>
+<pre class="r"><code># Create Plot
+plot(x = BostonHousing2$rm, y = BostonHousing2$cmedv, 
+     main = &quot;Bedrooms and Housing Prices&quot;, xlab = &quot;Bedrooms&quot;, ylab = &quot;Prices&quot;)</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/CreatePlot-1.png" width="672" /></p>
+<p>From examining the plot, it looks like there’s a slightly positive correlation.</p>
 </div>
 <div id="testing-correlation" class="section level1">
 <h1>Testing Correlation</h1>
@@ -97,5 +98,71 @@ summary(model)
 ## Residual standard error: 6.597 on 504 degrees of freedom
 ## Multiple R-squared:  0.4848, Adjusted R-squared:  0.4838 
 ## F-statistic: 474.3 on 1 and 504 DF,  p-value: &lt; 2.2e-16</code></pre>
-<p>From the output it can be seen that the p-value is statistically significant with a value less than 0.05. We also need to take a look at</p>
+</div>
+<div id="interpreting-linear-regression-output" class="section level1">
+<h1>Interpreting Linear Regression Output</h1>
+<p>From the output it can be seen that the p-value for <code>rm</code> is statistically significant with a value less than 0.05. However, we also need to take a look at the rest of the output. We’ll look at the Multiple R Squared next.</p>
+<p>The Multiple R squared indicates how well the fit is between the model or regression line and the data. In particular, it explains the proportion of variance in the dependent variable explained by the independent variable. In our example, about 48% of the of the variation in <code>cmedv</code> can be explained by <code>rm</code>, meaning that 52% of the variance can be explained by other variables. This may mean that it may be better to create a model based on a multiple linear regression, but for now we’ll continue with the simple linear regression.</p>
+<p>We can ignore the adjusted R squared for now because it is only used in multiple linear regression (when there is more than one independent variable). Both the adjusted R squared and multiple R squared would likely be higher when taking into consideration other independent variables.</p>
+</div>
+<div id="examinng-the-residuals" class="section level1">
+<h1>Examinng the Residuals</h1>
+<p>Next we can examine the residuals to better see how the model fits the data.</p>
+<pre class="r"><code>plot(model$residuals)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/Residuals-1.png" width="672" /></p>
+<p>From the plot we can see a fairly clear pattern in the data. This means that the model could be improved upon, likely because the model is missing variables. If there were no pattern in the residuals then the model would likely have a better fit.</p>
+<p>Now we’ll try adding more independent variables to the analysis and see the ramifications of adding nearly all the data available in the data set to the analysis.</p>
+</div>
+<div id="multiple-linear-regression" class="section level1">
+<h1>Multiple Linear Regression</h1>
+<p>To perform multiple linear regression in r we add <code>+ independent variable</code> to <code>lm()</code>.</p>
+<pre class="r"><code>multi_model = lm(cmedv ~ rm + age + dis + tax + crim + ptratio + indus + rad + lstat + b + nox, BostonHousing2)
+
+multi_model
+## 
+## Call:
+## lm(formula = cmedv ~ rm + age + dis + tax + crim + ptratio + 
+##     indus + rad + lstat + b + nox, data = BostonHousing2)
+## 
+## Coefficients:
+## (Intercept)           rm          age          dis          tax         crim  
+##   37.233087     4.060190    -0.002911    -1.228799    -0.011195    -0.101331  
+##     ptratio        indus          rad        lstat            b          nox  
+##   -1.106268     0.020329     0.301698    -0.530741     0.009774   -17.817258
+summary(multi_model)
+## 
+## Call:
+## lm(formula = cmedv ~ rm + age + dis + tax + crim + ptratio + 
+##     indus + rad + lstat + b + nox, data = BostonHousing2)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -13.7191  -2.8701  -0.7444   1.7667  26.8082 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  37.233087   5.158569   7.218 2.01e-12 ***
+## rm            4.060190   0.417312   9.729  &lt; 2e-16 ***
+## age          -0.002911   0.013247  -0.220 0.826178    
+## dis          -1.228799   0.184651  -6.655 7.56e-11 ***
+## tax          -0.011195   0.003680  -3.042 0.002477 ** 
+## crim         -0.101331   0.033075  -3.064 0.002306 ** 
+## ptratio      -1.106268   0.125082  -8.844  &lt; 2e-16 ***
+## indus         0.020329   0.061525   0.330 0.741218    
+## rad           0.301698   0.066349   4.547 6.85e-06 ***
+## lstat        -0.530741   0.051136 -10.379  &lt; 2e-16 ***
+## b             0.009774   0.002713   3.603 0.000347 ***
+## nox         -17.817258   3.858929  -4.617 4.97e-06 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 4.8 on 494 degrees of freedom
+## Multiple R-squared:  0.7327, Adjusted R-squared:  0.7268 
+## F-statistic: 123.1 on 11 and 494 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>The output from the multiple linear regression is similar to the output from the simple linear regression, except there are more variables to consider. We can see that the adjusted R squared is higher at 0.73. In other words, the model explains about 73% of the variation in the dependent variable.</p>
+<p>We must now also pay attention to the adjusted R squared instead of the multiple R squared. This is because the multiple R squared always increases when more independent variables are added to the analysis. The adjusted R squared is a version of the R squared adjusted for the increase of the multiple R squared.</p>
+<p>We can once again plot the residuals:</p>
+<pre class="r"><code>plot(multi_model$residuals)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/MultiResiduals-1.png" width="672" /></p>
+<p>After examining the plot of residuals it can be seen that the model could still be improved due to the data still having somewhat of a pattern. The improvement could come about by transforming a variable or variables used in the analysis.</p>
 </div>

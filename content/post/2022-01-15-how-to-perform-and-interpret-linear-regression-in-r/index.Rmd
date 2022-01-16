@@ -1,12 +1,13 @@
 ---
 title: How to Perform and Interpret Linear Regression in R
 author: Wes H Cooper
-date: '2022-01-15'
+date: '2022-01-16'
 slug: []
 categories: []
+draft: false
 tags:
   - linear regession
-description: In this post, we will cover linear regression, a popular statistical technique used to analyze data when the dependent variable is continuous. To explain how to do this analysis in R we will examine a data set of housing data in Boston. The data set conains 506 census tracts of Boston from the 1970 census.
+description: In this post, we will cover simple linear regression and multiple linear regression, a popular statistical technique used to analyze data when the dependent variable is continuous. To explain how to do this analysis in R we will examine a data set of housing data in Boston. The data set conains 506 census tracts of Boston from the 1970 census.
 ---
 
 
@@ -16,7 +17,9 @@ knitr::opts_chunk$set(collapse = TRUE)
 ```
 # Introduction
 
-In this post, we will cover linear regression, a popular statistical technique used to analyze data when the dependent variable is continuous. To explain how to do this analysis in R we will examine a data set of housing data in Boston. The data set conains 506 census tracts of Boston from the 1970 census. The variables in the data set can be used to predict `cmedv`, the median value of owner-occupied homes in 1000's of USD.
+In this post, we will cover simple linear regression and multiple linear regression, a popular statistical technique used to analyze data when the dependent variable is continuous. To explain how to do this analysis in R we will examine a data set of housing data in Boston. The data set conains 506 census tracts of Boston from the 1970 census. The variables in the data set can be used to predict `cmedv`, the median value of owner-occupied homes in 1000's of USD.
+
+# Examining the Data 
 
 Calling `head()` on the data set produces the following:
 
@@ -27,18 +30,17 @@ head(BostonHousing2)
 
 ```
 
-# Examining the Data
-
 From `head()` we can see the 19 columns. For this project, I'm most interested in examining the relationship between `rm` and `cmedv`. `rm` tells us how many rooms are in a house while `cmedv` tells us the median value of owner-occupied homes in 1000's of USD. I'm thinking that the amount of rooms in a house may have a relationship with the cost of the house.
 
-We can also create a scatter plot with the function `ggplot()` to examine if it looks like there is a linear relationship. 
+We can also create a scatter plot with the function `plot()` to examine if it looks like there is a linear relationship. 
 
 ```{r CreatePlot}
-library(ggplot2)
-
-ggplot(BostonHousing2, aes(x = rm, y = cmedv)) +
-  geom_point()
+# Create Plot
+plot(x = BostonHousing2$rm, y = BostonHousing2$cmedv, 
+     main = "Bedrooms and Housing Prices", xlab = "Bedrooms", ylab = "Prices")
 ```
+
+From examining the plot, it looks like there's a slightly positive correlation.
 
 # Testing Correlation
 
@@ -69,4 +71,46 @@ model
 summary(model)
 ```
 
-From the output it can be seen that the p-value is statistically significant with a value less than 0.05. We also need to take a look at 
+# Interpreting Linear Regression Output
+
+From the output it can be seen that the p-value for `rm` is statistically significant with a value less than 0.05. However, we also need to take a look at the rest of the output. We'll look at the Multiple R Squared next. 
+
+The Multiple R squared indicates how well the fit is between the model or regression line and the data. In particular, it explains the proportion of variance in the dependent variable explained by the independent variable. In our example, about 48% of the of the variation in `cmedv` can be explained by `rm`, meaning that 52% of the variance can be explained by other variables. This may mean that it may be better to create a model based on a multiple linear regression, but for now we'll continue with the simple linear regression.
+
+We can ignore the adjusted R squared for now because it is only used in multiple linear regression (when there is more than one independent variable). Both the adjusted R squared and multiple R squared would likely be higher when taking into consideration other independent variables.
+
+# Examinng the Residuals
+
+Next we can examine the residuals to better see how the model fits the data.
+
+```{r Residuals}
+plot(model$residuals)
+```
+
+From the plot we can see a fairly clear pattern in the data. This means that the model could be improved upon, likely because the model is missing variables. If there were no pattern in the residuals then the model would likely have a better fit.
+
+Now we'll try adding more independent variables to the analysis and see the ramifications of adding nearly all the data available in the data set to the analysis.
+
+# Multiple  Linear Regression
+
+To perform multiple linear regression in r we add `+ independent variable` to `lm()`.
+
+```{r MultiLinearRegression}
+multi_model = lm(cmedv ~ rm + age + dis + tax + crim + ptratio + indus + rad + lstat + b + nox, BostonHousing2)
+
+multi_model
+summary(multi_model)
+```
+
+The output from the multiple linear regression is similar to the output from the simple linear regression, except there are more variables to consider. We can see that the adjusted R squared is higher at 0.73. In other words, the model explains about 73% of the variation in the dependent variable.
+
+We must now also pay attention to the adjusted R squared instead of the multiple R squared. This is because the multiple R squared always increases when more independent variables are added to the analysis. The adjusted R squared is a version of the R squared adjusted for the increase of the multiple R squared.
+
+We can once again plot the residuals:
+
+```{r MultiResiduals}
+plot(multi_model$residuals)
+```
+
+After examining the plot of residuals it can be seen that the model could still be improved due to the data still having somewhat of a pattern. The improvement could come about by transforming a variable or variables used in the analysis.
+
