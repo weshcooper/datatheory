@@ -1,0 +1,101 @@
+---
+title: How to Perform and Interpret Linear Regression in R
+author: Wes H Cooper
+date: '2022-01-15'
+slug: []
+categories: []
+tags:
+  - linear regession
+description: In this post, we will cover linear regression, a popular statistical technique used to analyze data when the dependent variable is continuous. To explain how to do this analysis in R we will examine a data set of housing data in Boston. The data set conains 506 census tracts of Boston from the 1970 census.
+---
+
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>In this post, we will cover linear regression, a popular statistical technique used to analyze data when the dependent variable is continuous. To explain how to do this analysis in R we will examine a data set of housing data in Boston. The data set conains 506 census tracts of Boston from the 1970 census. The variables in the data set can be used to predict <code>cmedv</code>, the median value of owner-occupied homes in 1000’s of USD.</p>
+<p>Calling <code>head()</code> on the data set produces the following:</p>
+<pre class="r"><code>library(mlbench)
+data(&quot;BostonHousing2&quot;)
+head(BostonHousing2)
+##         town tract      lon     lat medv cmedv    crim zn indus chas   nox
+## 1     Nahant  2011 -70.9550 42.2550 24.0  24.0 0.00632 18  2.31    0 0.538
+## 2 Swampscott  2021 -70.9500 42.2875 21.6  21.6 0.02731  0  7.07    0 0.469
+## 3 Swampscott  2022 -70.9360 42.2830 34.7  34.7 0.02729  0  7.07    0 0.469
+## 4 Marblehead  2031 -70.9280 42.2930 33.4  33.4 0.03237  0  2.18    0 0.458
+## 5 Marblehead  2032 -70.9220 42.2980 36.2  36.2 0.06905  0  2.18    0 0.458
+## 6 Marblehead  2033 -70.9165 42.3040 28.7  28.7 0.02985  0  2.18    0 0.458
+##      rm  age    dis rad tax ptratio      b lstat
+## 1 6.575 65.2 4.0900   1 296    15.3 396.90  4.98
+## 2 6.421 78.9 4.9671   2 242    17.8 396.90  9.14
+## 3 7.185 61.1 4.9671   2 242    17.8 392.83  4.03
+## 4 6.998 45.8 6.0622   3 222    18.7 394.63  2.94
+## 5 7.147 54.2 6.0622   3 222    18.7 396.90  5.33
+## 6 6.430 58.7 6.0622   3 222    18.7 394.12  5.21</code></pre>
+</div>
+<div id="examining-the-data" class="section level1">
+<h1>Examining the Data</h1>
+<p>From <code>head()</code> we can see the 19 columns. For this project, I’m most interested in examining the relationship between <code>rm</code> and <code>cmedv</code>. <code>rm</code> tells us how many rooms are in a house while <code>cmedv</code> tells us the median value of owner-occupied homes in 1000’s of USD. I’m thinking that the amount of rooms in a house may have a relationship with the cost of the house.</p>
+<p>We can also create a scatter plot with the function <code>ggplot()</code> to examine if it looks like there is a linear relationship.</p>
+<pre class="r"><code>library(ggplot2)
+
+ggplot(BostonHousing2, aes(x = rm, y = cmedv)) +
+  geom_point()</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/CreatePlot-1.png" width="672" /></p>
+</div>
+<div id="testing-correlation" class="section level1">
+<h1>Testing Correlation</h1>
+<p>To test the correlation between variables a correlation coefficient can be calculated, where <code>BostonHousing2$rm</code> is the independent variable and <code>BostonHousing2$cmedv</code> is the dependent variable.</p>
+<pre class="r"><code>
+cor.test(BostonHousing2$rm, BostonHousing2$cmedv)
+## 
+##  Pearson&#39;s product-moment correlation
+## 
+## data:  BostonHousing2$rm and BostonHousing2$cmedv
+## t = 21.779, df = 504, p-value &lt; 2.2e-16
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.6484962 0.7386401
+## sample estimates:
+##       cor 
+## 0.6963038</code></pre>
+<p>As can be seen from the output there is a moderately strong correlation between the variables with a correlation coefficient of 0.696 and a statistically significant p-value of less than 0.05.</p>
+</div>
+<div id="running-linear-regression-model" class="section level1">
+<h1>Running Linear Regression Model</h1>
+<p>We can now run the linear regression. A linear regression in r can be performed by using the <code>lm()</code> function. The format for <code>lm()</code> is as follows:</p>
+<p><code>lm([dependent variable] ~ [independent variables], data = [data frame])</code></p>
+<p>In the following example, a linear regression is performed on the Boston Housing data set. As mentioned earlier, we are looking at the relationship between <code>cmedv</code> and <code>rm</code> where <code>cmedv</code> is the median value of owner-occupied homes in 1000’s of USD and <code>rm</code> is the number of rooms in a house.</p>
+<pre class="r"><code># Fit linear model
+model = lm(cmedv ~ rm, BostonHousing2)
+
+# Examine model
+model
+## 
+## Call:
+## lm(formula = cmedv ~ rm, data = BostonHousing2)
+## 
+## Coefficients:
+## (Intercept)           rm  
+##      -34.66         9.10
+summary(model)
+## 
+## Call:
+## lm(formula = cmedv ~ rm, data = BostonHousing2)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -23.336  -2.425   0.093   2.918  39.434 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -34.6592     2.6421  -13.12   &lt;2e-16 ***
+## rm            9.0997     0.4178   21.78   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 6.597 on 504 degrees of freedom
+## Multiple R-squared:  0.4848, Adjusted R-squared:  0.4838 
+## F-statistic: 474.3 on 1 and 504 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>From the output it can be seen that the p-value is statistically significant with a value less than 0.05. We also need to take a look at</p>
+</div>

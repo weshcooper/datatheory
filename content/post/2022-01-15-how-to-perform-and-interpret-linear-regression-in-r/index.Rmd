@@ -1,0 +1,72 @@
+---
+title: How to Perform and Interpret Linear Regression in R
+author: Wes H Cooper
+date: '2022-01-15'
+slug: []
+categories: []
+tags:
+  - linear regession
+description: In this post, we will cover linear regression, a popular statistical technique used to analyze data when the dependent variable is continuous. To explain how to do this analysis in R we will examine a data set of housing data in Boston. The data set conains 506 census tracts of Boston from the 1970 census.
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+
+```
+# Introduction
+
+In this post, we will cover linear regression, a popular statistical technique used to analyze data when the dependent variable is continuous. To explain how to do this analysis in R we will examine a data set of housing data in Boston. The data set conains 506 census tracts of Boston from the 1970 census. The variables in the data set can be used to predict `cmedv`, the median value of owner-occupied homes in 1000's of USD.
+
+Calling `head()` on the data set produces the following:
+
+```{r LifeExpectancyUK}
+library(mlbench)
+data("BostonHousing2")
+head(BostonHousing2)
+
+```
+
+# Examining the Data
+
+From `head()` we can see the 19 columns. For this project, I'm most interested in examining the relationship between `rm` and `cmedv`. `rm` tells us how many rooms are in a house while `cmedv` tells us the median value of owner-occupied homes in 1000's of USD. I'm thinking that the amount of rooms in a house may have a relationship with the cost of the house.
+
+We can also create a scatter plot with the function `ggplot()` to examine if it looks like there is a linear relationship. 
+
+```{r CreatePlot}
+library(ggplot2)
+
+ggplot(BostonHousing2, aes(x = rm, y = cmedv)) +
+  geom_point()
+```
+
+# Testing Correlation
+
+To test the correlation between variables a correlation coefficient can be calculated, where `BostonHousing2$rm` is the independent variable and `BostonHousing2$cmedv` is the dependent variable.
+
+```{r CorrelationTest}
+
+cor.test(BostonHousing2$rm, BostonHousing2$cmedv)
+
+```
+
+As can be seen from the output there is a moderately strong correlation between the variables with a correlation coefficient of 0.696 and a statistically significant p-value of less than 0.05.
+
+# Running Linear Regression Model
+
+We can now run the linear regression. A linear regression in r can be performed by using the `lm()` function. The format for `lm()` is as follows:
+
+`lm([dependent variable] ~ [independent variables], data = [data frame])`
+
+In the following example, a linear regression is performed on the Boston Housing data set. As mentioned earlier, we are looking at the relationship between `cmedv` and `rm` where `cmedv` is the median value of owner-occupied homes in 1000's of USD and `rm` is the number of rooms in a house.
+
+```{r LinearModel}
+# Fit linear model
+model = lm(cmedv ~ rm, BostonHousing2)
+
+# Examine model
+model
+summary(model)
+```
+
+From the output it can be seen that the p-value is statistically significant with a value less than 0.05. We also need to take a look at 
