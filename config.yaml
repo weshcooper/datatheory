@@ -28,7 +28,7 @@ languages:
     params:
       logo:
         logoHomeLink: /
-        logoText: DataTheory
+        logoText: DataTheory.io
     readMore: Read more
     readOtherPosts: Read other posts
     subtitle: Data and Research Blog
