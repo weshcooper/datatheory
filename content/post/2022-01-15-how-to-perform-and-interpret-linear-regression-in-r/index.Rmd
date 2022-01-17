@@ -6,7 +6,8 @@ slug: []
 categories: []
 draft: false
 tags:
-  - linear regession
+  - simple linear regession
+  - multiple linear regression
 description: In this post, we will cover simple linear regression and multiple linear regression, a popular statistical technique used to analyze data when the dependent variable is continuous. To explain how to do this analysis in R we will examine a data set of housing data in Boston. The data set conains 506 census tracts of Boston from the 1970 census.
 ---
 
@@ -15,11 +16,11 @@ description: In this post, we will cover simple linear regression and multiple l
 knitr::opts_chunk$set(collapse = TRUE)
 
 ```
-# Introduction
+## Introduction
 
-In this post, we will cover simple linear regression and multiple linear regression, a popular statistical technique used to analyze data when the dependent variable is continuous. To explain how to do this analysis in R we will examine a data set of housing data in Boston. The data set conains 506 census tracts of Boston from the 1970 census. The variables in the data set can be used to predict `cmedv`, the median value of owner-occupied homes in 1000's of USD.
+In this post, we will cover simple linear regression and multiple linear regression, popular statistical techniques used to analyze data when the dependent variable is continuous. To explain how to do this analysis in R we will examine a data set of housing data in Boston. The data set contains 506 census tracts of Boston from the 1970 census. The variables in the data set can be used to predict `cmedv`, the median value of owner-occupied homes in 1000's of USD.
 
-# Examining the Data 
+## Examining the Data 
 
 Calling `head()` on the data set produces the following:
 
@@ -32,6 +33,20 @@ head(BostonHousing2)
 
 From `head()` we can see the 19 columns. For this project, I'm most interested in examining the relationship between `rm` and `cmedv`. `rm` tells us how many rooms are in a house while `cmedv` tells us the median value of owner-occupied homes in 1000's of USD. I'm thinking that the amount of rooms in a house may have a relationship with the cost of the house.
 
+## Testing Correlation
+
+To test the correlation between variables a correlation coefficient can be calculated, where `BostonHousing2$rm` is the independent variable and `BostonHousing2$cmedv` is the dependent variable.
+
+```{r CorrelationTest}
+
+cor.test(BostonHousing2$rm, BostonHousing2$cmedv)
+
+```
+
+As can be seen from the output there is a moderately strong correlation between 'rm' and 'cmedv' with a correlation coefficient of 0.696 and a statistically significant p-value of less than 0.05.
+
+## Creating a Scatterplot
+
 We can also create a scatter plot with the function `plot()` to examine if it looks like there is a linear relationship. 
 
 ```{r CreatePlot}
@@ -42,19 +57,8 @@ plot(x = BostonHousing2$rm, y = BostonHousing2$cmedv,
 
 From examining the plot, it looks like there's a slightly positive correlation.
 
-# Testing Correlation
 
-To test the correlation between variables a correlation coefficient can be calculated, where `BostonHousing2$rm` is the independent variable and `BostonHousing2$cmedv` is the dependent variable.
-
-```{r CorrelationTest}
-
-cor.test(BostonHousing2$rm, BostonHousing2$cmedv)
-
-```
-
-As can be seen from the output there is a moderately strong correlation between the variables with a correlation coefficient of 0.696 and a statistically significant p-value of less than 0.05.
-
-# Running Linear Regression Model
+## Running Linear Regression Model
 
 We can now run the linear regression. A linear regression in r can be performed by using the `lm()` function. The format for `lm()` is as follows:
 
@@ -71,7 +75,7 @@ model
 summary(model)
 ```
 
-# Interpreting Linear Regression Output
+## Interpreting Linear Regression Output
 
 From the output it can be seen that the p-value for `rm` is statistically significant with a value less than 0.05. However, we also need to take a look at the rest of the output. We'll look at the Multiple R Squared next. 
 
@@ -79,7 +83,7 @@ The Multiple R squared indicates how well the fit is between the model or regres
 
 We can ignore the adjusted R squared for now because it is only used in multiple linear regression (when there is more than one independent variable). Both the adjusted R squared and multiple R squared would likely be higher when taking into consideration other independent variables.
 
-# Examinng the Residuals
+## Examinng the Residuals
 
 Next we can examine the residuals to better see how the model fits the data.
 
@@ -89,11 +93,14 @@ plot(model$residuals)
 
 From the plot we can see a fairly clear pattern in the data. This means that the model could be improved upon, likely because the model is missing variables. If there were no pattern in the residuals then the model would likely have a better fit.
 
-Now we'll try adding more independent variables to the analysis and see the ramifications of adding nearly all the data available in the data set to the analysis.
+Now we'll try adding more independent variables to the analysis and see the ramifications of adding nearly all the data available in the data set to the analysis that is supposed to predict `cmedv`.
 
-# Multiple  Linear Regression
+## Multiple  Linear Regression
 
 To perform multiple linear regression in r we add `+ independent variable` to `lm()`.
+
+`lm([dependent variable] ~ [independent variable] + [independent variable], data = [data frame])`
+
 
 ```{r MultiLinearRegression}
 multi_model = lm(cmedv ~ rm + age + dis + tax + crim + ptratio + indus + rad + lstat + b + nox, BostonHousing2)
@@ -102,9 +109,9 @@ multi_model
 summary(multi_model)
 ```
 
-The output from the multiple linear regression is similar to the output from the simple linear regression, except there are more variables to consider. We can see that the adjusted R squared is higher at 0.73. In other words, the model explains about 73% of the variation in the dependent variable.
+The output from the multiple linear regression is similar to the output from the simple linear regression, except there are more variables to consider. We can see that the adjusted R squared is higher at 0.73. In other words, the model explains about 73% of the variation in the dependent variable. Additionally, a few of the variables, such as `indus` and `age` are not statistically significant due to the p-value not being less than 0.05.
 
-We must now also pay attention to the adjusted R squared instead of the multiple R squared. This is because the multiple R squared always increases when more independent variables are added to the analysis. The adjusted R squared is a version of the R squared adjusted for the increase of the multiple R squared.
+We must now also pay attention to the adjusted R squared instead of the multiple R squared. This is because the multiple R squared always increases when more independent variables are added to the analysis. The adjusted R squared is a version of the R squared adjusted for this expected increase of the multiple R squared.
 
 We can once again plot the residuals:
 
