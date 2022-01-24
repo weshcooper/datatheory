@@ -2,3 +2,13 @@
 .logo__cursor {
   background-color: #ff7469;
 }
+
+
+body.dark-theme {
+    --background: #101010;
+    --background-secondary: #3b3d42;
+    --header: #000000;
+    --color: #dcdcdc;
+    --color-secondary: #7a7a7a;
+    --border-color: #363330;
+}
