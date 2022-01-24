@@ -1,7 +1,7 @@
 +++
 author = "Wes H Cooper"
 categories = []
-cover = ""
+cover = "img/Data Website Image.png"
 cover_image = "/uploads/1-msot4l0xw7lf3iu-en0uuq.png"
 date = 2022-01-14T13:00:00Z
 description = ""
@@ -9,7 +9,7 @@ tags = []
 title = "Welcome to the Blog"
 
 +++
-Data Theory is a blog I recently created where I plan on publishing and discussing data, statistics, quantitative research, and game theory. Since my background is in studying politics and international relations, lots of the articles on this site may focus on using data to look at and examine politics and international relations.
+Big Human is a blog where I plan on publishing and discussing data, statistics, quantitative research, and game theory. Since my background is in studying politics and international relations, lots of the articles on this site may focus on using data to look at and examine politics and international relations.
 
 I plan on applying what I’m learning about data science and statistics to several different topics in addition to politics and writing about it on this blog. This blog may also feature articles by other people that have knowledge and insights on data and other topics.
 

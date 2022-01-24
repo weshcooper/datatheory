@@ -1,5 +1,5 @@
 ---
-title: How to Perform and Interpret Linear Regression in R
+title: Linear Regression in R on Boston Housing Data
 author: Wes H Cooper
 date: '2022-01-16'
 slug: []
@@ -8,7 +8,8 @@ draft: false
 tags:
   - simple linear regession
   - multiple linear regression
-description: In this post, we will cover simple linear regression and multiple linear regression, popular statistical techniques used to analyze data when the dependent variable is continuous. To explain how to do this analysis in R we will examine a data set of housing data in Boston. The data set conains 506 census tracts of Boston from the 1970 census.
+description: In this post, we will cover simple linear regression and multiple linear regression, popular statistical techniques used to analyze data when the dependent variable is continuous. To explain how to do this analysis in R we will examine a data set of housing data in Boston. The data set contains 506 census tracts of Boston from the 1970 census.
+cover: img/michael-browning-ZLN2WOVpjCo-unsplash.jpg
 ---
 
 
@@ -19,7 +20,7 @@ description: In this post, we will cover simple linear regression and multiple l
 </div>
 <div id="examining-the-data" class="section level2">
 <h2>Examining the Data</h2>
-<p>Calling <code>head()</code> on the data set produces the following:</p>
+<p>After loading the data set, calling <code>head()</code> on the data set produces the following:</p>
 <pre class="r"><code>library(mlbench)
 data(&quot;BostonHousing2&quot;)
 head(BostonHousing2)
@@ -114,60 +115,5 @@ summary(model)
 <p>Next we can examine the residuals to better see how the model fits the data.</p>
 <pre class="r"><code>plot(model$residuals)</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/Residuals-1.png" width="672" /></p>
-<p>From the plot we can see a fairly clear pattern in the data. This means that the model could be improved upon, likely because the model is missing variables. If there were no pattern in the residuals then the model would likely have a better fit.</p>
-<p>Now we’ll try adding more independent variables to the analysis and see the ramifications of adding nearly all the data available in the data set to the analysis that is supposed to predict <code>cmedv</code>.</p>
-</div>
-<div id="multiple-linear-regression" class="section level2">
-<h2>Multiple Linear Regression</h2>
-<p>To perform multiple linear regression in r we add <code>+ independent variable</code> to <code>lm()</code>.</p>
-<p><code>lm([dependent variable] ~ [independent variable] + [independent variable], data = [data frame])</code></p>
-<pre class="r"><code>multi_model = lm(cmedv ~ rm + age + dis + tax + crim + ptratio + indus + rad + lstat + b + nox, BostonHousing2)
-
-multi_model
-## 
-## Call:
-## lm(formula = cmedv ~ rm + age + dis + tax + crim + ptratio + 
-##     indus + rad + lstat + b + nox, data = BostonHousing2)
-## 
-## Coefficients:
-## (Intercept)           rm          age          dis          tax         crim  
-##   37.233087     4.060190    -0.002911    -1.228799    -0.011195    -0.101331  
-##     ptratio        indus          rad        lstat            b          nox  
-##   -1.106268     0.020329     0.301698    -0.530741     0.009774   -17.817258
-summary(multi_model)
-## 
-## Call:
-## lm(formula = cmedv ~ rm + age + dis + tax + crim + ptratio + 
-##     indus + rad + lstat + b + nox, data = BostonHousing2)
-## 
-## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -13.7191  -2.8701  -0.7444   1.7667  26.8082 
-## 
-## Coefficients:
-##               Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  37.233087   5.158569   7.218 2.01e-12 ***
-## rm            4.060190   0.417312   9.729  &lt; 2e-16 ***
-## age          -0.002911   0.013247  -0.220 0.826178    
-## dis          -1.228799   0.184651  -6.655 7.56e-11 ***
-## tax          -0.011195   0.003680  -3.042 0.002477 ** 
-## crim         -0.101331   0.033075  -3.064 0.002306 ** 
-## ptratio      -1.106268   0.125082  -8.844  &lt; 2e-16 ***
-## indus         0.020329   0.061525   0.330 0.741218    
-## rad           0.301698   0.066349   4.547 6.85e-06 ***
-## lstat        -0.530741   0.051136 -10.379  &lt; 2e-16 ***
-## b             0.009774   0.002713   3.603 0.000347 ***
-## nox         -17.817258   3.858929  -4.617 4.97e-06 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 4.8 on 494 degrees of freedom
-## Multiple R-squared:  0.7327, Adjusted R-squared:  0.7268 
-## F-statistic: 123.1 on 11 and 494 DF,  p-value: &lt; 2.2e-16</code></pre>
-<p>The output from the multiple linear regression is similar to the output from the simple linear regression, except there are more variables to consider. We can see that the adjusted R squared is higher at 0.73. In other words, the model explains about 73% of the variation in the dependent variable. Additionally, a few of the variables, such as <code>indus</code> and <code>age</code> are not statistically significant due to the p-value not being less than 0.05.</p>
-<p>We must now also pay attention to the adjusted R squared instead of the multiple R squared. This is because the multiple R squared always increases when more independent variables are added to the analysis. The adjusted R squared is a version of the R squared adjusted for this expected increase of the multiple R squared.</p>
-<p>We can once again plot the residuals:</p>
-<pre class="r"><code>plot(multi_model$residuals)</code></pre>
-<p><img src="{{< blogdown/postref >}}index_files/figure-html/MultiResiduals-1.png" width="672" /></p>
-<p>After examining the plot of residuals it can be seen that the model could still be improved due to the data still having somewhat of a pattern. The improvement could come about by transforming a variable or variables used in the analysis.</p>
+<p>From the plot we can see a fairly clear pattern in the data. This means that the model could be improved upon, likely because the model is either missing variables or the independent variable needs to be transformed. If the model had a better fit then there would be no pattern in the residuals. We’ll explore the topic of improving the model in future blog posts.</p>
 </div>

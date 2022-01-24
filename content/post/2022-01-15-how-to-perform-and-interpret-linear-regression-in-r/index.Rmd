@@ -1,5 +1,5 @@
 ---
-title: How to Perform and Interpret Linear Regression in R
+title: Linear Regression in R on Boston Housing Data
 author: Wes H Cooper
 date: '2022-01-16'
 slug: []
@@ -8,7 +8,8 @@ draft: false
 tags:
   - simple linear regession
   - multiple linear regression
-description: In this post, we will cover simple linear regression and multiple linear regression, popular statistical techniques used to analyze data when the dependent variable is continuous. To explain how to do this analysis in R we will examine a data set of housing data in Boston. The data set conains 506 census tracts of Boston from the 1970 census.
+description: In this post, we will cover simple linear regression and multiple linear regression, popular statistical techniques used to analyze data when the dependent variable is continuous. To explain how to do this analysis in R we will examine a data set of housing data in Boston. The data set contains 506 census tracts of Boston from the 1970 census.
+cover: img/michael-browning-ZLN2WOVpjCo-unsplash.jpg
 ---
 
 
@@ -22,9 +23,9 @@ In this post, we will cover simple linear regression and multiple linear regress
 
 ## Examining the Data 
 
-Calling `head()` on the data set produces the following:
+After loading the data set, calling `head()` on the data set produces the following:
 
-```{r LifeExpectancyUK}
+```{r Load-Data-Head}
 library(mlbench)
 data("BostonHousing2")
 head(BostonHousing2)
@@ -91,33 +92,5 @@ Next we can examine the residuals to better see how the model fits the data.
 plot(model$residuals)
 ```
 
-From the plot we can see a fairly clear pattern in the data. This means that the model could be improved upon, likely because the model is missing variables. If there were no pattern in the residuals then the model would likely have a better fit.
-
-Now we'll try adding more independent variables to the analysis and see the ramifications of adding nearly all the data available in the data set to the analysis that is supposed to predict `cmedv`.
-
-## Multiple  Linear Regression
-
-To perform multiple linear regression in r we add `+ independent variable` to `lm()`.
-
-`lm([dependent variable] ~ [independent variable] + [independent variable], data = [data frame])`
-
-
-```{r MultiLinearRegression}
-multi_model = lm(cmedv ~ rm + age + dis + tax + crim + ptratio + indus + rad + lstat + b + nox, BostonHousing2)
-
-multi_model
-summary(multi_model)
-```
-
-The output from the multiple linear regression is similar to the output from the simple linear regression, except there are more variables to consider. We can see that the adjusted R squared is higher at 0.73. In other words, the model explains about 73% of the variation in the dependent variable. Additionally, a few of the variables, such as `indus` and `age` are not statistically significant due to the p-value not being less than 0.05.
-
-We must now also pay attention to the adjusted R squared instead of the multiple R squared. This is because the multiple R squared always increases when more independent variables are added to the analysis. The adjusted R squared is a version of the R squared adjusted for this expected increase of the multiple R squared.
-
-We can once again plot the residuals:
-
-```{r MultiResiduals}
-plot(multi_model$residuals)
-```
-
-After examining the plot of residuals it can be seen that the model could still be improved due to the data still having somewhat of a pattern. The improvement could come about by transforming a variable or variables used in the analysis.
+From the plot we can see a fairly clear pattern in the data. This means that the model could be improved upon, likely because the model is either missing variables or the independent variable needs to be transformed. If the model had a better fit then there would be no pattern in the residuals. We'll explore the topic of improving the model in future blog posts.
 
