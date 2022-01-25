@@ -4,11 +4,11 @@ author: Wes H Cooper
 date: '2022-01-16'
 slug: []
 categories: []
-draft: false
+draft: true
 tags:
   - simple linear regession
   - multiple linear regression
-description: In this post, we will cover simple linear regression and multiple linear regression, popular statistical techniques used to analyze data when the dependent variable is continuous. To explain how to do this analysis in R we will examine a data set of housing data in Boston. The data set contains 506 census tracts of Boston from the 1970 census.
+description: In this post, we will cover simple linear regression, a popular statistical technique used to analyze data when the dependent variable is continuous. To explain how to do this analysis in R we will examine a data set of housing data in Boston. The data set contains 506 census tracts of Boston from the 1970 census.
 cover: img/michael-browning-ZLN2WOVpjCo-unsplash.jpg
 ---
 
@@ -19,7 +19,7 @@ knitr::opts_chunk$set(collapse = TRUE)
 ```
 ## Introduction
 
-In this post, we will cover simple linear regression and multiple linear regression, popular statistical techniques used to analyze data when the dependent variable is continuous. To explain how to do this analysis in R we will examine a data set of housing data in Boston. The data set contains 506 census tracts of Boston from the 1970 census. The variables in the data set can be used to predict `cmedv`, the median value of owner-occupied homes in 1000's of USD.
+In this post, we will cover simple linear regression, a popular statistical technique used to analyze data when the dependent variable is continuous. To explain how to do this analysis in R we will examine a data set of housing data in Boston. The data set contains 506 census tracts of Boston from the 1970 census. The variables in the data set may be be used to predict `cmedv`, the median value of owner-occupied homes in 1000's of USD.
 
 ## Examining the Data 
 
@@ -79,7 +79,6 @@ summary(model)
 ## Interpreting Linear Regression Output
 
 From the output it can be seen that the p-value for `rm` is statistically significant with a value less than 0.05. However, we also need to take a look at the rest of the output. We'll look at the Multiple R Squared next. 
-
 The Multiple R squared indicates how well the fit is between the model or regression line and the data. In particular, it explains the proportion of variance in the dependent variable explained by the independent variable. In our example, about 48% of the of the variation in `cmedv` can be explained by `rm`, meaning that 52% of the variance can be explained by other variables. This may mean that it may be better to create a model based on a multiple linear regression, but for now we'll continue with the simple linear regression.
 
 We can ignore the adjusted R squared for now because it is only used in multiple linear regression (when there is more than one independent variable). Both the adjusted R squared and multiple R squared would likely be higher when taking into consideration other independent variables.
