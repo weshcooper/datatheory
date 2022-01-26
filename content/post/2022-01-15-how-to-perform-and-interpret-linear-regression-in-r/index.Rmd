@@ -7,7 +7,6 @@ categories: []
 draft: true
 tags:
   - simple linear regession
-  - multiple linear regression
 description: In this post, we will cover simple linear regression, a popular statistical technique used to analyze data when the dependent variable is continuous. To explain how to do this analysis in R we will examine a data set of housing data in Boston. The data set contains 506 census tracts of Boston from the 1970 census.
 cover: img/michael-browning-ZLN2WOVpjCo-unsplash.jpg
 ---
