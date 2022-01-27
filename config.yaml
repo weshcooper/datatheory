@@ -5,7 +5,7 @@ theme: hugo-theme-hello-friend
 paginate: 5
 params:
   contentTypeName: post
-  defaultTheme: light
+  defaultTheme: dark
   showMenuItems: 2
   showReadingTime: yes
 languages:

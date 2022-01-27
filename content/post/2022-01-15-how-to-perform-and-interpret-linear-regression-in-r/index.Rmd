@@ -1,10 +1,10 @@
 ---
 title: Linear Regression in R on Boston Housing Data
 author: Wes H Cooper
-date: '2022-01-16'
+date: '2022-01-26'
 slug: []
 categories: []
-draft: true
+draft: false
 tags:
   - simple linear regession
 description: In this post, we will cover simple linear regression, a popular statistical technique used to analyze data when the dependent variable is continuous. To explain how to do this analysis in R we will examine a data set of housing data in Boston. The data set contains 506 census tracts of Boston from the 1970 census.

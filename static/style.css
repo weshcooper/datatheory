@@ -21,7 +21,7 @@ body.dark-theme {
     padding: 10px;
 }
 
-/* Do not display posts */
+/* Do not display posts
 div.posts {
     display: none;
 }
@@ -29,4 +29,4 @@ div.posts {
 
 .container {
     text-align: left;
-}
+} */
