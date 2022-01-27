@@ -18,5 +18,15 @@ body.dark-theme {
     border: 0px solid #ffffff00;
     border-radius: 10px;
     max-width: 800px;
-    padding: 0px;
+    padding: 10px;
+}
+
+/* Do not display posts */
+div.posts {
+    display: none;
+}
+
+
+.container {
+    text-align: left;
 }
