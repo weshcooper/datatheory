@@ -1,9 +1,9 @@
-
+/* logo cursor color */
 .logo__cursor {
   background-color: #ff7469;
 }
 
-
+/* dark theme colors */
 body.dark-theme {
     --background: #101010;
     --background-secondary: #3b3d42;
@@ -11,4 +11,12 @@ body.dark-theme {
     --color: #dcdcdc;
     --color-secondary: #7a7a7a;
     --border-color: #363330;
+}
+
+/* homepage border */
+.framed {
+    border: 0px solid #ffffff00;
+    border-radius: 10px;
+    max-width: 800px;
+    padding: 0px;
 }
