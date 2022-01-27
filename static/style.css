@@ -30,3 +30,19 @@ div.posts {
 .container {
     text-align: left;
 } */
+
+
+a:hover{ 
+    transition: ease-in-out all .2s; 
+    -moz-transition: ease-in-out all .2s;
+    -webkit-transition: ease-in-out all .2s;
+    background-color:none;
+    color:#ff7469;
+    text-decoration:none;
+    font-weight:none;
+}
+
+
+a:active {
+    color:#ff7469;
+}
