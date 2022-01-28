@@ -31,7 +31,7 @@ div.posts {
     text-align: left;
 } */
 
-
+/* hover effect for links */
 a:hover{ 
     transition: ease-in-out all .2s; 
     -moz-transition: ease-in-out all .2s;
@@ -42,7 +42,3 @@ a:hover{
     font-weight:none;
 }
 
-
-a:active {
-    color:#ff7469;
-}
