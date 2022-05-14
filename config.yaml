@@ -36,22 +36,6 @@ languages:
     title: Big Human
     writtenBy: Written by
 rssFullText: true
-headers:
-  - for: /*
-    values:
-      X-Frame-Options: DENY
-      X-XSS-Protection: 1; mode=block
-      X-Content-Type-Options: nosniff
-      Content-Security-Policy-Report-Only: >-
-        default-src 'none'; form-action 'none'; frame-ancestors 'none';
-        report-uri https://bighuman.report-uri.com/r/d/csp/enforce
-      Referrer-Policy: strict-origin-when-cross-origin
-      Strict-Transport-Security: max-age=2592000
-      Feature-Policy: >-
-        vibrate 'none'; geolocation 'none'; midi 'none'; notifications 'none';
-        push 'none'; sync-xhr 'none'; microphone 'none'; camera 'none';
-        magnetometer 'none'; gyroscope 'none'; speaker 'none'; vibrate 'none';
-        fullscreen 'none'; payment 'none'
 
 
 
