@@ -10,4 +10,4 @@ Big Human is a blog created by Wes H Cooper that provides articles related to st
 
 Wes H Cooper’s interest and background is in international relations. As a result, many of the statistical and data science concepts covered in this blog are applied to international relations and social issues. You can read Wes H Cooper’s published research at [Research Gate](https://www.researchgate.net/profile/Wes-H-Cooper).
 
-[Click here](wescpr@live.com) to contact Wes Cooper.
+[Click here](mailto:wescpr@live.com) to contact Wes Cooper.
