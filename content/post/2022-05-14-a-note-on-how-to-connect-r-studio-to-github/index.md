@@ -5,6 +5,7 @@ date: '2022-05-14'
 slug: []
 categories:
   - R
+draft: true
 tags: [R Studio, GitHub, personal acccess token]
 description: A short explanation of how to connect R Studio to GitHub via personal access token.
 ---
